@@ -5,6 +5,18 @@ static char daytab[2][13] = {
     {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 };
 
+char *month_name(int n)
+{
+    static char *name[] = {
+        "Illegal month",
+        "Jan", "Feb", "Mar",
+        "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep",
+        "Oct", "Nov", "Dec"
+    };
+
+    return (n < 1 || n > 12) ? name[0] : name[n];
+}
 
 /* day_of_year: set day of year from month&day */
 int day_of_year(int year, int month, int day)
@@ -39,4 +51,7 @@ void main()
     int passed_month, passed_day;
     month_day(2023, 165, &passed_month, &passed_day);
     printf("%d %d\n", passed_month, passed_day);
+
+    month_day(2023, 166, &passed_month, &passed_day);
+    printf("%s %d\n", month_name(passed_month), passed_day);
 }
