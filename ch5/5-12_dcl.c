@@ -70,7 +70,8 @@ int bufp = 0;
 
 int getch(void) /* get a (possibly pushbacrk) char */
 {
-    return (bufp > 0) ? buf[--bufp]: getchar(); 
+    //return (bufp > 0) ? buf[--bufp]: getchar(); 
+    return (bufp > 0) ? token[--bufp]: getchar(); 
 }
 
 void ungetch(int c) /* push character back on input */
@@ -78,7 +79,7 @@ void ungetch(int c) /* push character back on input */
     if (bufp >= BUFSIZE)
         printf("ungetch: too much characters\n");
     else
-        buf[bufp=++] = c;
+        token[bufp++] = c;
 }
 
 /* dcl: parse a diclarator */
@@ -89,7 +90,7 @@ void dcl(void)
         ns++;
     dirdcl();
     while (ns-- > 0)
-        strcat(put, " pointer to");
+        strcat(out, " pointer to");
 }
 
 /* dirdcl: parse direct diclrator */
