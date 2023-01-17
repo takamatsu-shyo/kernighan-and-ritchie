@@ -24,8 +24,8 @@ main() /* convert declarations to words */
        out[0] = '\0';
        dcl(); /* parse rest of line */
        if (tokentype != '\n')
-           printf("syntax error\n");
-       printf("%s: %s %s", name, out, datatype);
+           printf("main: syntax error\n");
+       printf("%s: %s %s\n", name, out, datatype);
     }
     return 0;
 }
@@ -61,11 +61,12 @@ int gettoken(void) /* return next token */
         *p = '\0';
         ungetch(c);
         return tokentype = NAME;
-    } 
+    } else
+        return tokentype = c;
 }
 
 #define BUFSIZE 100
-char buf[BUFSIZE]; // token?
+//char buf[BUFSIZE]; // token?
 int bufp = 0;
 
 int getch(void) /* get a (possibly pushbacrk) char */
