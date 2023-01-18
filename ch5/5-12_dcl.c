@@ -15,11 +15,13 @@ char token[MAXTOKEN];   /* last token string*/
 char name[MAXTOKEN];    /* identifiyer name */
 char datatype[MAXTOKEN];/* data type = char, int etc */
 char out[1000];          /* output string */
+int bufp = 0;
 
-main() /* convert declarations to words */
+int main() /* convert declarations to words */
 {
     while (gettoken() != EOF) /* 1st token on line */
     {
+       printf("main: %s\n", token); 
        strcpy(datatype, token); /* is the datatype */
        out[0] = '\0';
        dcl(); /* parse rest of line */
@@ -36,8 +38,9 @@ int gettoken(void) /* return next token */
     void ungetch(int);
     char *p = token;
 
-    while((c = getch()) == ' ' || c == '\t')
+    while ((c = getch()) == ' ' || c == '\t')
         ;
+    //printf("before if %c\n",*p);
     if (c == '(')
     {
         if ((c = getch()) == ')')
@@ -56,23 +59,42 @@ int gettoken(void) /* return next token */
         return tokentype = BRACKETS;
     } else if (isalpha(c))
     {
-        for (*p++ = c; isalnum(c = getch()); )
+        //printf("0 %c\n%c\n%s\n",c ,p[0], token);
+        //*p++ = c;
+        printf("1 %c\n%c\n%s\n",c ,p[0], token);
+        
+        for (*p++ = c, printf("2 %c\n%c\n%s\n",c ,p[0], token); isalnum(c = getch()); )
+        {
+            //printf("name b/ %c %c\n",c, *p);
             *p++ = c;
+            printf("3 %c\n%c\n%s\n",c ,p[0], token);
+        }
         *p = '\0';
+        printf("4 %c\n%c\n%s\n",c ,p[0], token);
         ungetch(c);
+        printf("5 %c\n%c\n%s\n",c ,p[0], token);
         return tokentype = NAME;
     } else
         return tokentype = c;
 }
 
 #define BUFSIZE 100
-//char buf[BUFSIZE]; // token?
-int bufp = 0;
+//93
+//139
+
+char buf[BUFSIZE];
 
 int getch(void) /* get a (possibly pushbacrk) char */
 {
-    //return (bufp > 0) ? buf[--bufp]: getchar(); 
-    return (bufp > 0) ? token[--bufp]: getchar(); 
+    char _c;
+    //return (bufp > 0) ? token[--bufp]: getchar(); 
+    if (bufp > 0)
+        _c = buf[--bufp];
+    else
+        _c = getchar(); 
+
+    //printf("getch: %c\n", _c);
+    return _c;
 }
 
 void ungetch(int c) /* push character back on input */
@@ -80,7 +102,7 @@ void ungetch(int c) /* push character back on input */
     if (bufp >= BUFSIZE)
         printf("ungetch: too much characters\n");
     else
-        token[bufp++] = c;
+        buf[bufp++] = c;
 }
 
 /* dcl: parse a diclarator */
@@ -103,12 +125,15 @@ void dirdcl(void)
         if (tokentype != ')')
             printf("ERROR: missing )\n");
     } else if (tokentype == NAME) /* variable name */
+    {
+        printf("dirdcl(NAME): %s\n", token);
         strcpy(name, token);
+    }
     else
         printf("ERROR: expected name or (dcl)\n");
     while ((type=gettoken()) == PARENS || type == BRACKETS)
         if (type == PARENS)
-            strcat(out, " functio returning");
+            strcat(out, " function returning");
         else
         {
             strcat(out, " array");
@@ -116,5 +141,3 @@ void dirdcl(void)
             strcat(out, " of");
         }
 }
-
-
