@@ -2,23 +2,23 @@
 
 int main()
 {
-    int ilist[5];
-    int jlist[5];
+    int i_array[5];
+    int j_array[5];
     int found_int;
 
     for (int k = 0; k < 5; k++)
     {
-        ilist[k] = (k + 1) * 3;
-        jlist[k] = (k + 1) * 5;
+        i_array[k] = (k + 1) * 3;
+        j_array[k] = (k + 1) * 5;
     }
 
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 5; j++)
         {
-            if (ilist[i] == jlist[j])
+            if (i_array[i] == j_array[j])
             {
-                found_int = ilist[i];
+                found_int = i_array[i];
                 goto found;
            } 
         }
