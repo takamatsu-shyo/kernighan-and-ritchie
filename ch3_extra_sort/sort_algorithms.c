@@ -1,4 +1,4 @@
-#include "3-x_sort-algorithms.h"
+#include "sort_algorithms.h"
 
 void bubblesort(int v[], int length)
 {

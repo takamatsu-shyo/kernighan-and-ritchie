@@ -1,15 +1,8 @@
-#include "3-x_sort-algorithms.h"
-#include "all_print.h"
+#include "sort_algorithms.h"
+#include "sort_lib.h"
 #include "bogosort.h"
 #include <stdio.h>
 #include <time.h>
-
-void copy_array(int v[], int w[], int length)
-{
-    for (int i = 0; i < length; i++)
-        w[i] = v[i];
-}
-
 
 int main()
 {
@@ -19,7 +12,7 @@ int main()
     printf("Length %u\n", length);
 
     srand(time(NULL));
-    int array[length], sort_array[length];
+    int array[length];
     for (int i = 0; i < length; i++)
     {
         //array[i] = rand(); 
@@ -29,10 +22,11 @@ int main()
 
 
     printf("Bubble sort\n");
-    copy_array(array, sort_array, length);
-    all_print(sort_array, length);
-    bubblesort(sort_array, length);
-    all_print(sort_array, length);
+    int bubble_array[length];
+    copy_array(array, bubble_array, length);
+    all_print(bubble_array, length);
+    bubblesort(bubble_array, length);
+    all_print(bubble_array, length);
  
     printf("k-sort\n");
     all_print(array, length);
