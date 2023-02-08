@@ -6,46 +6,39 @@
 
 int main()
 {
-    //int length = INT_MAX;
-    //int length = 256;
     int length = 4;
     printf("Length %u\n", length);
 
-    srand(time(NULL));
     int array[length];
-    for (int i = 0; i < length; i++)
-    {
-        //array[i] = rand(); 
-        array[i] = length - i; 
-    }
-    all_print(array, length);
+    get_array(array, length);
+    print_array(array, length);
 
 
     printf("Bubble sort\n");
     int bubble_array[length];
     copy_array(array, bubble_array, length);
-    all_print(bubble_array, length);
+    print_array(bubble_array, length);
     bubblesort(bubble_array, length);
-    all_print(bubble_array, length);
+    print_array(bubble_array, length);
  
     printf("k-sort\n");
-    all_print(array, length);
+    print_array(array, length);
     int k_array[length];
     k_sort(array, k_array, length);
-    all_print(k_array, length);
+    print_array(k_array, length);
 
     printf("ky-sort\n");
-    all_print(array, length);
+    print_array(array, length);
     int ky_array[length];
     ky_sort(array, ky_array, length);
-    all_print(ky_array, length);
+    print_array(ky_array, length);
  
     printf("Bogo sort\n");
-    all_print(array, length);
+    print_array(array, length);
     int bogo_array[length];
     copy_array(array, bogo_array, length);
     bogosort(bogo_array, length);
-    all_print(bogo_array, length);
+    print_array(bogo_array, length);
  
    return 0;
 }
